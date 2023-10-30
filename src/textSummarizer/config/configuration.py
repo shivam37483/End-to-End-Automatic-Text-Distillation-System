@@ -2,6 +2,7 @@ from textSummarizer.utils import read_yaml,create_directories
 from textSummarizer import constants
 
 from textSummarizer.entity import DataIngestionConfig 
+from textSummarizer.entity import DataValidationConfig
 
 class ConfigurationManager:      #class to read the config file and params file
     def __init__(
@@ -36,3 +37,19 @@ class ConfigurationManager:      #class to read the config file and params file
         # )        
 
         return data_ingestion_config
+    
+    
+    def get_data_validation_config(self) -> DataValidationConfig:       #function to return the DataIngestionConfig object
+        config = self.config.data_validation
+
+        create_directories([config.root_dir])
+
+        data_validation_config = DataValidationConfig(
+            root_dir = config.root_dir,
+            STATUS_FILE= config.STATUS_FILE,
+            ALL_REQUIRED_FILES= config.ALL_REQUIRED_FILES
+        )
+
+        return data_validation_config
+    
+
