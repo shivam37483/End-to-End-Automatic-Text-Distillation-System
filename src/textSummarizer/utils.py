@@ -2,12 +2,12 @@ from textSummarizer import logging
 import os
 from box.exceptions import BoxValueError
 import yaml
-from ensure import ensure_annotations
-from box import ConfigBox
+from ensure import ensure_annotations              #ensures that the type of the arguments passed to the function is the same as the type of the arguments in the function definition
+from box import ConfigBox                 #ConfigBox allows to easily call values from a yaml file as a dictionary 
 from pathlib import Path
 from typing import Any
 
-@ensure_annotations           #ensure_annotations is a decorator that checks the type of the arguments passed to the function
+@ensure_annotations           #better practice coz we are defining the type of parameters in all the functions in this module
 def read_yaml(path_to_yaml: Path) -> ConfigBox:             #path_to_yaml: Path does not allow any other type of argument to be passed to the function besides Path
     '''
     Read Yaml file and returns
@@ -38,7 +38,6 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:             #path_to_yaml: Path 
         raise e      
     
 @ensure_annotations
-# write a method to create directories which takes path as a list 
 def create_directories(path_to_directories: list, verbose=True):
     '''
     Create a list of directories
@@ -55,5 +54,17 @@ def create_directories(path_to_directories: list, verbose=True):
             logging.logger.info(f"Directory created at {path}")
 
             
+@ensure_annotations
+def get_size(path: Path) -> str:
+    """get size in KB
+
+    Args:
+        path (Path): path of the file
+
+    Returns:
+        str: size in KB
+    """
+    size_in_kb = round(os.path.getsize(path)/1024)          
+    return f"~ {size_in_kb} KB"
 
 
