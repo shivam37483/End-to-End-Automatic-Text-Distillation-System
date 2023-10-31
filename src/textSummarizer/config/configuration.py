@@ -3,6 +3,8 @@ from textSummarizer import constants
 
 from textSummarizer.entity import DataIngestionConfig 
 from textSummarizer.entity import DataValidationConfig
+from textSummarizer.entity import DataTransformationConfig
+
 
 class ConfigurationManager:      #class to read the config file and params file
     def __init__(
@@ -53,3 +55,12 @@ class ConfigurationManager:      #class to read the config file and params file
         return data_validation_config
     
 
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+
+        create_directories([config.root_dir])      #root_path is the path where all the data will be stored present in the config.yaml file
+
+        return DataTransformationConfig(
+            root_dir=config.root_dir,
+            data_path=config.data_path,
+            tokenizer_name=config.tokenizer_name)
