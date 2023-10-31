@@ -17,3 +17,9 @@ data_transformation:
   root_dir: artifacts/data_transformation                #We will create a new directory for data_transformation which will save all the transformed data 
   data_path: artifacts/data_ingestion/samsum_dataset         #Contains the data from data ingestion on which we will apply transformation
   tokenizer_name: google/pegasus-cnn_dailymail            #It will automatically download the model 
+
+
+model_training:
+  root_dir: artifacts/model_training
+  data_path: artifacts/data_transformation/samsum_dataset
+  model_ckpt: google/pegasus-cnn_dailymail
