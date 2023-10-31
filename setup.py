@@ -1,3 +1,5 @@
+#This file contains all the package information as well as info regarding the developer of project which will automatically created when requirement.txt file  is run.
+
 import setuptools
 
 with open("README.md", "r") as fh:            # Read the README.md file; open() returns a file object

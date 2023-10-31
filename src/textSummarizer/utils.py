@@ -8,34 +8,35 @@ from pathlib import Path
 from typing import Any
 
 @ensure_annotations           #better practice coz we are defining the type of parameters in all the functions in this module
-def read_yaml(path_to_yaml: Path) -> ConfigBox:             #path_to_yaml: Path does not allow any other type of argument to be passed to the function besides Path
+def read_yaml(path_of_yaml: Path) -> ConfigBox:             # (: Path) does not allow any other type of argument to be passed to the function besides Path
     '''
-    Read Yaml file and returns
+    Read Yaml file and returns ConfigBox
     
     Args:
-        path_to_yaml (str): Path like input
+        path_of_yaml (str): Path like input
 
     Raises:
         ValueError: If yaml file is empty
         e: empty yaml file
 
     Returns:
-        ConfigBox: ConfigBox type           #ConfigBox is a class from box module that allows to access the yaml file as a dictionary
+        ConfigBox: ConfigBox type           #ConfigBox is a class from box module that allows to access the yaml file with dot notations
     '''
 
     try:
-        with open(path_to_yaml) as yaml_file:
+        with open(path_of_yaml) as yaml_file:
             content = yaml.safe_load(yaml_file)
+            logging.logger.info(f"yaml filr: {path_of_yaml} loaded successfully")
 
-            logging.logger.info(f"yaml filr: {path_to_yaml} loaded successfully")
-
-            return ConfigBox(content)            #returns the yaml file as a dictionary
+            return ConfigBox(content)            #returns the yaml file as a ConfigBox
         
     except BoxValueError:          #BoxValueError is an exception from box module that is raised when the yaml file is empty
-        raise ValueError(f"Yaml file {path_to_yaml} is empty")   
+        raise ValueError(f"Yaml file {path_of_yaml} is empty")   
     
     except Exception as e:          #handles any other exception that might be raised
         raise e      
+    
+
     
 @ensure_annotations
 def create_directories(path_to_directories: list, verbose=True):

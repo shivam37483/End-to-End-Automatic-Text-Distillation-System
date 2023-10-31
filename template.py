@@ -1,3 +1,5 @@
+#This file is used to create a Folder Structure for our project. All the various files and folders whill be created acc. to defined struc.
+
 import os
 from pathlib import Path
 import logging
