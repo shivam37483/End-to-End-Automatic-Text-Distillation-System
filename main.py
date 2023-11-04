@@ -4,6 +4,8 @@ from textSummarizer.pipline.stage_01_data_ingestion import DataIngestionTraining
 from textSummarizer.pipline.stage_02_data_validation import DataValidationTrainingPipeline
 from textSummarizer.pipline.stage_03_data_transformation import DataTransformationTrainingPipeline
 from textSummarizer.pipline.stage_04_model_training import ModelTrainingPipeline
+from textSummarizer.pipline.stage_05_model_evaluation import ModelEvaluationPipeline
+
 
 STAGE_NAME = "Data Ingestion Stage"
 try:
@@ -43,6 +45,17 @@ try:
     logger.info("Stage: {}".format(STAGE_NAME))
     model_trainer = ModelTrainingPipeline()
     model_trainer.main()
+    logger.info("Stage: {} completed successfully".format(STAGE_NAME))
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+
+STAGE_NAME = "MODEL Evaluation Stage"
+try:
+    logger.info("Stage: {}".format(STAGE_NAME))
+    model_evaluator = ModelEvaluationPipeline()
+    model_evaluator.main()
     logger.info("Stage: {} completed successfully".format(STAGE_NAME))
 except Exception as e:
     logger.exception(e)
