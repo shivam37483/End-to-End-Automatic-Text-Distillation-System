@@ -22,16 +22,16 @@ class ModelEvaluation:
     def calculate_metric_on_test_ds(self,dataset,metric,model,tokenizer,
                                     batch_size=16,
                                     device='cuda'if torch.cuda.is_available() else 'cpu',
-                                    column_text = 'article',
-                                    column_summary = 'highlights'):
-        article_batches = list(self.generate_batch_sized_chunks(dataset[column_text],batch_size))
+                                    column_text = 'article',         #column_text is the column name of the dataset which contains the text to be summarized
+                                    column_summary = 'highlights'):           #column_summary is the column name of the dataset which contains the summary of the text
+        article_batches = list(self.generate_batch_sized_chunks(dataset[column_text],batch_size))               #generate_batch_sized_chunks is a function which splits the dataset into smaller batches
         target_batches = list(self.generate_batch_sized_chunks(dataset[column_summary],batch_size))
 
         for article_batch,target_batch in tqdm(
             zip(article_batches,target_batches),
             total=len(article_batches)):
 
-            inputs = tokenizer(article_batch,max_length= 1024,
+            inputs = tokenizer(article_batch,max_length= 1024,             #tokenizer is used to tokenize the input text and return the input_ids and attention_mask -> input_ids is a tensor containing the indices of the tokens in the input sequence
                                truncation=True, padding='max_length',return_tensors='pt')
             
             summaries = model.generate(input_ids= inputs['input_ids'].to(device),
